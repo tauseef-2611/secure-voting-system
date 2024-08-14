@@ -1,0 +1,16 @@
+import { z } from "zod";
+
+export const VoterSchema = z.object({
+  voter_id: z.string(),
+  name: z.string(),
+  phone: z.string(),
+  year_of_membership: z.number(),
+  date_of_birth: z.string(),
+  unit: z.string(),
+  area: z.string(),
+  verified: z.boolean(),
+  present: z.boolean(),
+  voted: z.boolean(),
+});
+
+export type VoterSchema = z.infer<typeof VoterSchema>;
