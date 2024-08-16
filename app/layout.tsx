@@ -14,6 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  alert(process.env.MONGODB_URI);
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>{children}</body>
