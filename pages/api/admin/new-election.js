@@ -77,8 +77,6 @@ const handler = async (req, res) => {
       let candidateCount = 0;
       let status = "ready";
 
-      
-
       if (type !== "Electoral Collage") {
         console.log('Creating candidates');
         console.log("Type:", type);

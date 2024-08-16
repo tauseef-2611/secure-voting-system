@@ -286,6 +286,8 @@ interface DataTableFacetedFilterPropsVote<TData, TValue> {
   title: string;
   options?: { label: string; value: number }[];
 }
+
+
 export function DataTableFacetedFilterVote<TData, TValue>({
   column,
   title,
