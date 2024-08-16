@@ -33,6 +33,7 @@ export function CardWithForm() {
   }, []);
   async function handleLogin(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
+    alert(process.env.MONGODB_URI);
     console.log('Logging in with:', username, password);
     try {
       const result = await doLogin(username, password);
