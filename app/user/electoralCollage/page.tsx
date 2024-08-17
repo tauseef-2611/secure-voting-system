@@ -5,14 +5,38 @@ import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { Election } from "@/utils/Types/election";
 import ElectionDetails from './electionDetails';
-import { Tabs, TabsContent, TabsTrigger,TabsList } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsTrigger, TabsList } from '@/components/ui/tabs';
+import { toast } from 'sonner';
+import { User } from '@/utils/Types/user';
+import { getSession } from '@/app/actions';
+import { useUser } from '../UserContext';
 
 export default function VotePage() {
     const [electionData, setElectionData] = useState<Election | null>(null);
     const router = useRouter();
-
+    const {user}= useUser();
     useEffect(() => {
-        document.title = "Vote | Intekhaab";
+        if (!user) return;
+
+        const checkPresent = async () => {
+            console.log(`Requesting: /api/voter-present/${user?.voter_id}`);
+
+            axios.get(`/api/voter-present/${user?.voter_id}`)
+                .then((res) => {
+                    if (res.data.present) {
+                        router.push('/user/electoralCollage/vote');
+                    } else {
+                        toast.error("You are not present");
+                        router.push('/user');
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toast.error("You are not present in the electoral collage");
+                    router.push('/user');
+                });
+        };
+
         const checkType = () => {
             axios.get('/api/election')
                 .then((res) => {
@@ -31,12 +55,13 @@ export default function VotePage() {
                 });
         };
 
+        checkPresent();
         checkType();
-    }, [router]);
+    }, [user, router]);
 
     return (
         <div>
-           {electionData&& <ElectionDetails election={electionData} />}
+            {electionData && <ElectionDetails election={electionData} />}
         </div>
     );
 }

@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { Election } from "@/utils/Types/election";
 import ElectionDetails from './electionDetails';
-import { Tabs, TabsContent, TabsTrigger,TabsList } from '@/components/ui/tabs';
 
 export default function VotePage() {
     const [electionData, setElectionData] = useState<Election | null>(null);

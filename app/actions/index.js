@@ -6,6 +6,7 @@ import { connectToDatabase } from "@/utils/mongodb";
 import Voter from "@/models/Voter";
 import { error } from "console";
 import { isValidObjectId } from "mongoose";
+import axios from "axios";
 
 
 const secretKey = "secret";
@@ -50,60 +51,18 @@ export async function admindecrypt(input) {
     return payload;
     }
 
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB').replace(/\//g, '-'); // Replace slashes with dashes
-  }
-  async function getDataFromDb(phone, dob) {
+
+  export async function doLogin(user) {
     try {
-      await connectToDatabase(); // Ensure you have a function to connect to your database
-      console.log("Checking login info");
-      console.log(phone);
-      console.log(dob);
-  
-      const voter = await Voter.findOneAndUpdate(
-        { phone: phone, date_of_birth: dob },
-        { $set: { present: true } },
-        { new: true }
-      );
-      console.log(voter);
-  
-      if (voter == null) {
-        throw new Error("No voter found with the provided phone number and date of birth.");
-      }
-  
-      if (voter.voted == true) {
-        throw new Error("Vote already casted.");
-      }
-  
-      return voter;
+        const expires = new Date(Date.now() + 60 * 60 * 1000);
+        const session = await encrypt({ user, expires });
+        cookies().set("session", session, { expires, httpOnly: true });
+
+        return "Success"; // Return success message on successful login
     } catch (error) {
-      throw new Error(`Error retrieving voter data: ${error.message}`);
+      return error.message;
     }
-  }
-  
-  export async function doLogin(username, password) {
-    try {
-      password = formatDate(password); // Ensure you have a function to format the date
-      const voter = await getDataFromDb(username, password);
-  
-      if (!voter) {
-        throw new Error("Invalid credentials");
-      }
-  
-      const user = voter;
-      // Create the session
-      const expires = new Date(Date.now() + 60 * 60 * 1000);
-      const session = await encrypt({ user, expires });
-      
-      // Save the session in a cookie
-      cookies().set("session", session, { expires, httpOnly: true });
-  
-      return "Success"; // Return success message on successful login
-    } catch (error) {
-      return error.message; // Return the error message
-    }
-  }  
+}
 
 
 

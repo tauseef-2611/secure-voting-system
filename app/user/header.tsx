@@ -18,16 +18,11 @@ import {
 import { useEffect } from "react";
 import { doLogout } from "@/app/actions";
 import { User } from "@/utils/Types/user";
+import { useUser } from "./UserContext";
 
-interface HeaderProps {
-  user: User | null;
-}
 
-export function Header({ user }: HeaderProps) {
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
+export function Header() {
+  const {user} =useUser();
   const handleLogout = async () => {
     console.log("Logging out");
     await doLogout();

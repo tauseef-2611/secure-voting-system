@@ -123,10 +123,6 @@ const columns: ColumnDef<Candidate>[] = [
     header:"Date of Birth",
   },
   {
-    accessorKey: "year_of_membership",
-    header: "Year Of Membership",
-  },
-  {
     accessorKey: "unit",
     header: "Unit",
   },

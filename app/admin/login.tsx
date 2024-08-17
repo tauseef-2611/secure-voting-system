@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import  {adminLogin, doLogin}  from "@/app/actions";
+import { toast } from "sonner";
 
 export function CardWithForm() {
   const router = useRouter();
@@ -31,11 +32,12 @@ export function CardWithForm() {
     try {
       if(await adminLogin(username, password))
       {
+        toast.success("Login Successful");
         router.push('/dashboard');
       }
       else
       {
-        alert("Invalid Credentials");
+        toast.error("Invalid Credentials");
       }
     } catch (error) {
       console.error('Login failed:', error);
