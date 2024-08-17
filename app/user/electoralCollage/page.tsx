@@ -24,7 +24,7 @@ export default function VotePage() {
             axios.get(`/api/voter-present/${user?.voter_id}`)
                 .then((res) => {
                     if (res.data.present) {
-                        router.push('/user/electoralCollage/vote');
+                        toast.success("Your attendance is marked");
                     } else {
                         toast.error("You are not present");
                         router.push('/user');

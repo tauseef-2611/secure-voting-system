@@ -15,13 +15,7 @@ export default async function handler(req, res) {
             console.log(dob);
 
             // Find and update the voter
-            const voter = await Voter.findOneAndUpdate(
-                { phone: phone, date_of_birth: dob },
-                { $set: { present: true } },
-                { new: true }
-            );
-            console.log(voter);
-
+            const voter = await Voter.findOne({ phone: phone, date_of_birth: dob });
             // Check if voter is found
             if (voter == null) {
                 return res.status(404).json({ message: "No voter found with the provided phone number and date of birth." });
