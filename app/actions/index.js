@@ -2,14 +2,8 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { connectToDatabase } from "@/utils/mongodb";
-import Voter from "@/models/Voter";
-import { error } from "console";
-import { isValidObjectId } from "mongoose";
-import axios from "axios";
 
-
-const secretKey = "secret";
+const secretKey = process.env.SECRET_KEY;
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload) {
@@ -19,7 +13,8 @@ export async function encrypt(payload) {
     .setExpirationTime("1h")
     .sign(key);
 }
-const adminSecretKey = "secret";
+
+const adminSecretKey = process.env.ADMIN_SECRET_KEY;
 const adminkey = new TextEncoder().encode(adminSecretKey);
 
 export async function adminencrypt(payload) {
@@ -45,47 +40,47 @@ export async function decrypt(input) {
 }
 
 export async function admindecrypt(input) {
+  try {
     const { payload } = await jwtVerify(input, adminkey, {
-        algorithms: ["HS256"],
+      algorithms: ["HS256"],
     });
     return payload;
+  } catch (error) {
+    if (error.code === 'ERR_JWT_EXPIRED') {
+      throw new Error('Admin token has expired');
     }
-
-
-  export async function doLogin(user) {
-    try {
-        const expires = new Date(Date.now() + 60 * 60 * 1000);
-        const session = await encrypt({ user, expires });
-        cookies().set("session", session, { expires, httpOnly: true });
-
-        return "Success"; // Return success message on successful login
-    } catch (error) {
-      return error.message;
-    }
+    throw new Error('Admin token verification failed');
+  }
 }
 
-
-
-export async function adminLogin(username,password) {
-
-    if(username !== "admin" || password !== "master") {
-        return false;
-    }
-    // Verify credentials && get the user
-  
-    const user = { username: username , password: password };
-    // Create the session
-    const expires = new Date(Date.now() + 5*60*60 * 1000);
-    const session = await adminencrypt({ user, expires });
-  
-    // Save the session in a cookie
+export async function doLogin(user) {
+  try {
+    const expires = new Date(Date.now() + 60 * 60 * 1000);
+    const session = await encrypt({ user, expires });
     cookies().set("session", session, { expires, httpOnly: true });
-    return true;
+
+    return "Success"; // Return success message on successful login
+  } catch (error) {
+    return error.message;
+  }
 }
-    
 
-export async function doLogout(user) {
+export async function adminLogin(username, password) {
+  if (username !== "admin" || password !== "master") {
+    return false;
+  }
+  // Verify credentials && get the user
+  const user = { username: username, password: password };
+  // Create the session
+  const expires = new Date(Date.now() + 5 * 60 * 60 * 1000);
+  const session = await adminencrypt({ user, expires });
 
+  // Save the session in a cookie
+  cookies().set("session", session, { expires, httpOnly: true });
+  return true;
+}
+
+export async function doLogout() {
   cookies().set("session", "", { expires: new Date(0) });
 }
 
