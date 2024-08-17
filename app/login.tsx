@@ -16,6 +16,7 @@ import  {doLogin}  from "@/app/actions";
 import CalendarDateRangePicker from "@/components/date-range-picker";
 import { DatePickerDemo } from "@/components/date-picker";
 
+
 export function CardWithForm() {
   const router = useRouter();
 
@@ -33,7 +34,7 @@ export function CardWithForm() {
   }, []);
   async function handleLogin(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    alert(process.env.MONGODB_URI);
+    alert(process.env.NEXT_PUBLIC_MONGODB_URI);
     console.log('Logging in with:', username, password);
     try {
       const result = await doLogin(username, password);
@@ -55,6 +56,7 @@ export function CardWithForm() {
         <CardDescription>Smart & Secure Elections</CardDescription>
       </CardHeader>
       <CardContent>
+        <p>CHeck</p>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">

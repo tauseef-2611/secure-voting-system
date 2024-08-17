@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const NEXT_PUBLIC_MONGODB_URI = process.env.NEXT_PUBLIC_MONGODB_URI;
 
-if (!MONGODB_URI) {
+if (!NEXT_PUBLIC_MONGODB_URI) {
     throw new Error(
         
-        'Please define the MONGODB_URI environment variable inside .env.local'
+        'Please define the NEXT_PUBLIC_MONGODB_URI environment variable inside .env.local'
     );
 }
 
@@ -16,7 +16,7 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
-    console.log('MONGODB_URI:', MONGODB_URI);
+    console.log('NEXT_PUBLIC_MONGODB_URI:', NEXT_PUBLIC_MONGODB_URI);
     if (cached.conn) {
         console.log('Using cached database connection');
         return cached.conn;
@@ -28,7 +28,7 @@ export async function connectToDatabase() {
             useUnifiedTopology: true,
         };
 
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+        cached.promise = mongoose.connect(NEXT_PUBLIC_MONGODB_URI, opts).then((mongoose) => {
             return mongoose;
         });
     }
