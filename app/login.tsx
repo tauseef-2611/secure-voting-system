@@ -68,8 +68,8 @@ export function CardWithForm() {
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>Login</CardTitle>
-        <CardDescription>Smart & Secure Elections</CardDescription>
+        <CardTitle>Intekhaab</CardTitle>
+        <CardDescription>Simple & Secure Elections</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={(e) => e.preventDefault()}>

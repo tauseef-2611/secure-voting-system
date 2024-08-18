@@ -26,7 +26,7 @@ export default function VotePage() {
                     if (res.data.present) {
                         toast.success("Your attendance is marked");
                     } else {
-                        toast.error("You are not present");
+                        toast.error("You attedance is not marked");
                         router.push('/user');
                     }
                 })
@@ -57,6 +57,7 @@ export default function VotePage() {
 
         checkPresent();
         checkType();
+        console.log(electionData)
     }, [user, router]);
 
     return (

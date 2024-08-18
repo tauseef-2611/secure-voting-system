@@ -14,8 +14,12 @@ const ElectionSchema = new mongoose.Schema({
         enum: ["ready", "ongoing", "completed"]
     },
     presiding_officer: { type: String, required: true },
-    perAreaNominees: { type: Number, required: function() { return this.type === "Electoral Collage"; } },
-    council_size: { type: Number, required: function() { return this.type === "Advisory Council"; } }
+    ecRatio: { type: String },
+    council_size: { type: Number, required: function() { return this.type === "Advisory Council"; } },
+    perAreaNominees: { 
+        type: Map, 
+        of: Number, 
+    }
 });
 
 export default mongoose.models.Election || mongoose.model('Election', ElectionSchema);

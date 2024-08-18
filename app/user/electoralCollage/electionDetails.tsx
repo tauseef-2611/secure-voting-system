@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Election } from '@/utils/Types/election';
 import Link from 'next/link';
+import { useUser } from '@/app/user/UserContext';
 
 interface ElectionDetailsProps {
     election: Election;
 }
 
 const ElectionDetails: React.FC<ElectionDetailsProps> = ({ election }) => {
+    const {user}=useUser();
     return (
                <Card className="max-w-sm mx-auto my-4 shadow-lg sm:max-w-md">
             <CardHeader>
@@ -27,7 +29,7 @@ const ElectionDetails: React.FC<ElectionDetailsProps> = ({ election }) => {
                         <strong>Presiding Officer:</strong> {election.presiding_officer}
                     </div>
                     <div>
-                        <strong>Per Area Nomineez:</strong> {election.perAreaNominees}
+                        <strong>Area Nominees:</strong> {election.perAreaNominees[`${user?.area}`]}
                     </div>
                     <div>
                         <strong>Status:</strong><Badge>{election.status}</Badge>
