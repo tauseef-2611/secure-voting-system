@@ -1,19 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getSession } from '@/app/actions';
 import { useRouter } from 'next/navigation';
-
-type User = {
-  voter_id: string;
-  name: string;
-  phone: string;
-  year_of_membership: number;
-  date_of_birth: string;
-  unit: string;
-  area: string;
-  is_verified: boolean;
-  is_Present: boolean;
-  vote_Casted: boolean;
-};
+import { User } from '@/utils/Types/user';
 
 type UserContextType = {
   user: User | null;

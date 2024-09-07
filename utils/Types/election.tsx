@@ -5,6 +5,7 @@ export type Election = {
   type: string;
   presiding_officer: string;
   council_size: number;
+  nominee_size: number;
   status: string;
   perAreaNominees: {
     [key: string]: number;

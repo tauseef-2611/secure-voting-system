@@ -6,7 +6,7 @@ const ElectionSchema = new mongoose.Schema({
     type: { 
         type: String, 
         required: true, 
-        enum: ["Presidential", "Advisory Council", "Electoral Collage"] 
+        enum: ["Presidential", "Advisory Council", "Electoral College"] 
     },
     status: { 
         type: String, 
@@ -16,6 +16,10 @@ const ElectionSchema = new mongoose.Schema({
     presiding_officer: { type: String, required: true },
     ecRatio: { type: String },
     council_size: { type: Number, required: function() { return this.type === "Advisory Council"; } },
+    nominee_size: { 
+        type: Number, 
+        required: function() { return this.type === "Presidential"; } 
+    },
     perAreaNominees: { 
         type: Map, 
         of: Number, 

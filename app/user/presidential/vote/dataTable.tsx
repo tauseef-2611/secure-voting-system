@@ -174,7 +174,7 @@ const columns: ColumnDef<Candidate>[] = [
     React.useState<VisibilityState>(initialColumnVisibility)
   const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
 
-  const MAX_SELECTIONS = election?.council_size??2; // Maximum number of rows that can be selected
+  const MAX_SELECTIONS = election?.nominee_size??1; // Maximum number of rows that can be selected
 
   const handleRowSelectionChange: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
     const newRowSelection = typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;

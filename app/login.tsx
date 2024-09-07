@@ -50,9 +50,18 @@ export function CardWithForm() {
     })
     .then(response => {
       console.log('Login response:', response.data);
+      if(response.data.verified === false) {
+        toast.error('User not verified!'); // Display error
+        return router.push('/');
+      }
+      else
+      {
       return doLogin(response.data);
+      }
     })
     .then(() => {
+      // toast.success('Logged in successfully!'); // Display success toast
+      console.log('Login successful');
       router.push('/user');
     })
     .catch(error => {
@@ -91,9 +100,12 @@ export function CardWithForm() {
           </div>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-left gap-2">
         <Button onClick={handleLogin} disabled={loading}>
           {loading ? 'Loading...' : 'Login'}
+        </Button>
+        <Button variant="ghost"className="underline text-xs text-gray-400" onClick={() => router.push('/register')}>
+          Register
         </Button>
       </CardFooter>
     </Card>

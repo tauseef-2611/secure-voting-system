@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { doLogout } from "@/app/actions";
 import { User } from "@/utils/Types/user";
 import { useUser } from "./UserContext";
+import { User2Icon } from "lucide-react";
 
 
 export function Header() {
@@ -40,7 +41,9 @@ export function Header() {
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-                    <AvatarFallback>PF</AvatarFallback>
+                    <AvatarFallback>
+                      <User2Icon className="h-4 w-4" />
+                    </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
@@ -51,8 +54,6 @@ export function Header() {
                     <p className="text-xs leading-none text-muted-foreground">
                       {user?.phone}
                     </p>
-
-
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -73,11 +74,6 @@ export function Header() {
                       <strong>DoB: </strong>{user?.date_of_birth}
                     </p>
  
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                  <p className="text-xs leading-none text-muted-foreground">
-                      <strong>YoM: </strong>{user?.year_of_membership}
-                    </p> 
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

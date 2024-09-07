@@ -144,7 +144,11 @@ const columns: ColumnDef<Candidate>[] = [
       console.log('Election:', election);
         const fetchData = async () => {
             try {
-              const response = await axios.get('/api/getCandidates');
+              const response = await axios.get('/api/ec-candidates',{
+                params: {
+                  area: user?.area
+                }
+              });
               setData(response.data);
               setLoading(false);
             } catch (error: unknown) {
@@ -174,8 +178,7 @@ const columns: ColumnDef<Candidate>[] = [
     React.useState<VisibilityState>(initialColumnVisibility)
   const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
 
-  const MAX_SELECTIONS = election?.council_size??2; // Maximum number of rows that can be selected
-
+  const MAX_SELECTIONS = user?.area ? (election?.perAreaNominees[user.area] ?? 1) : 1;
   const handleRowSelectionChange: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
     const newRowSelection = typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
     const selectedRowCount = Object.values(newRowSelection).filter(Boolean).length;

@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Intekhaab",
-  description: "Simple and Secure Voting",
+  description: "Simple & Secure Voting",
 };
 
 export default function RootLayout({
@@ -16,8 +16,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const prefersDarkScheme = typeof window !== 'undefined' && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const initialTheme = prefersDarkScheme ? 'dark' : 'light';
+
   return (
-    <html lang="en" className="light">
+    <html lang="en" className={initialTheme}>
       <Toaster position="top-right" richColors /> 
       <body className={inter.className}>{children}</body>
     </html>

@@ -65,24 +65,12 @@ export async function doLogin(user) {
   }
 }
 
-export async function adminLogin(username, password) {
-  if (username !== "admin" || password !== "master") {
-    return false;
-  }
-  // Verify credentials && get the user
-  const user = { username: username, password: password };
-  // Create the session
-  const expires = new Date(Date.now() + 5 * 60 * 60 * 1000);
-  const session = await adminencrypt({ user, expires });
-
-  // Save the session in a cookie
-  cookies().set("session", session, { expires, httpOnly: true });
-  return true;
-}
-
 export async function doLogout() {
+  console.log("Logging out");
   cookies().set("session", "", { expires: new Date(0) });
+  return "Logged out";
 }
+
 
 export async function getSession() {
   const session = cookies().get("session")?.value;

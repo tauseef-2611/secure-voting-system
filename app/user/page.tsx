@@ -22,7 +22,6 @@ export default function VotePage() {
 
         axios.get('/api/election')
             .then((res) => {
-                console.log(res.data[0]);
                 setElection(res.data[0]);
             })
             .catch((err) => {
@@ -30,14 +29,11 @@ export default function VotePage() {
             });
 
         const checkSession = async () => {
-            console.log("Checking session");
             const session = await getSession();
-            console.log("Got session");
             if (!session) {
                 alert("You are not logged in");
                 router.push('/');
             } else {
-                console.log("Session: ", session);
                 setUser(session.user as User);
             }
             setLoading(false);
@@ -46,16 +42,16 @@ export default function VotePage() {
     }, [router]);
 
     const handleRoute = () => {
+        console.log("Routing to election page");
         if (!election) return;
+        setButtonLoading(true);
 
-        setButtonLoading(true); // Set button loading state to true
-
-        if (election.type === 'presidential') {
+        if (election.type === 'Presidential') {
             router.push('/user/presidential');
         } else if (election.type === 'Advisory Council') {
             router.push('/user/advisoryCouncil');
-        } else if (election.type === 'Electoral Collage') {
-            router.push('/user/electoralCollage');
+        } else if (election.type === 'Electoral College') {
+            router.push('/user/electoralCollege');
         }
     };
 
