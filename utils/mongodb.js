@@ -4,7 +4,6 @@ const NEXT_PUBLIC_MONGODB_URI = process.env.NEXT_PUBLIC_MONGODB_URI;
 
 if (!NEXT_PUBLIC_MONGODB_URI) {
     throw new Error(
-        
         'Please define the NEXT_PUBLIC_MONGODB_URI environment variable inside .env.local'
     );
 }
@@ -16,9 +15,7 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
-    console.log('NEXT_PUBLIC_MONGODB_URI:', NEXT_PUBLIC_MONGODB_URI);
     if (cached.conn) {
-        console.log('Using cached database connection');
         return cached.conn;
     }
 
@@ -35,7 +32,6 @@ export async function connectToDatabase() {
 
     try {
         cached.conn = await cached.promise;
-        console.log('Connected to database');
     } catch (error) {
         console.error('Database connection failed:', error);
         throw new Error('Database connection failed');

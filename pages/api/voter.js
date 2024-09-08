@@ -2,17 +2,13 @@ import { connectToDatabase } from '@/utils/mongodb';
 import Voter from '@/models/Voter';
 
 export default async function handler(req, res) {
-    console.log("Checking login info");
     if (req.method === 'POST') {
+
         const { phone, dob } = req.body;
-        console.log(`Phone: ${phone}, DOB: ${dob}`);    
 
         try {
             // Ensure you have a function to connect to your database
             await connectToDatabase();
-            console.log("Connected to database");
-            console.log(phone);
-            console.log(dob);
 
             // Find and update the voter
             const voter = await Voter.findOne({ phone: phone, date_of_birth: dob });

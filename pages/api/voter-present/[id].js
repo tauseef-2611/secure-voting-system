@@ -1,12 +1,19 @@
 import { connectToDatabase } from '@/utils/mongodb';
 import Voter from '@/models/Voter';
+import {validateSession} from '@/app/actions';
+
 
 export default async function handler(req, res) {
-    console.log("Voter Present login info");
 
     if (req.method === 'GET') {
+
+        const session=await validateSession(req.headers.cookie?.split('; ').find(cookie => cookie.startsWith('session='))?.split('=')[1])
+        if(!session)
+        {
+          return res.status(401).json({ error: 'Unauthorized' });
+        }
+
         const { id } = req.query;
-        console.log("Received GET request with id:", id);
 
         if (!id) {
             console.log("ID is missing in the request");
@@ -15,14 +22,12 @@ export default async function handler(req, res) {
 
         try {
             await connectToDatabase();
-            console.log("Connected to database");
 
             const voter = await Voter.findOne({ voter_id: id });
             if (!voter) {
                 console.log("Voter not found with id:", id);
                 return res.status(404).json({ message: 'Voter not found' });
             }
-            console.log("Voter is present:", voter.present);
 
             return res.status(200).json({ present: voter.present });
         } catch (error) {

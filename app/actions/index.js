@@ -66,7 +66,6 @@ export async function doLogin(user) {
 }
 
 export async function doLogout() {
-  console.log("Logging out");
   cookies().set("session", "", { expires: new Date(0) });
   return "Logged out";
 }
@@ -77,6 +76,17 @@ export async function getSession() {
   if (!session) return null;
   return await decrypt(session);
 }
+
+export async function validateSession(session)
+{
+  try {
+    const parsed = await decrypt(session);
+    return parsed;
+  } catch (error) {
+    return null;
+  }
+}
+
 
 export async function updateSession(request) {
   const session = request.cookies.get("session")?.value;

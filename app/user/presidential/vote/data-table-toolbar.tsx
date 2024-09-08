@@ -26,7 +26,7 @@ export function DataTableToolbar<TData>({
   useEffect(() => {
     const fetchAreas = async () => {
         try {
-            const response = await fetch("/api/admin/voter-areas");
+            const response = await fetch("/api/voter-areas");
             const data = await response.json();
             console.log("Fetched data:", data); // Log the fetched data to verify its structure
             const mappedAreas = data.map((area: string) => ({

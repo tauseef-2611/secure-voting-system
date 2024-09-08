@@ -19,11 +19,11 @@ const ElectionDetails: React.FC<ElectionDetailsProps> = ({ election }) => {
         </CardHeader>
         <CardContent>
             <div className="space-y-2">
+               <div>
+                <strong>Council Size: </strong>{election.council_size}
+               </div>
                 <div>
-                    <strong>Area Nominees:</strong> {election.perAreaNominees[`${user?.area}`]}
-                </div>
-                <div>
-                    <strong>Status:</strong><Badge>{election.status}</Badge>
+                    <strong>Status: </strong><Badge>{election.status}</Badge>
                 </div>
             </div>
     

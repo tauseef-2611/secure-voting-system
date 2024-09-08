@@ -42,7 +42,6 @@ export default function VotePage() {
     }, [router]);
 
     const handleRoute = () => {
-        console.log("Routing to election page");
         if (!election) return;
         setButtonLoading(true);
 

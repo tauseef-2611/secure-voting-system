@@ -49,7 +49,6 @@ export function CardWithForm() {
       dob: formatDate(password)
     })
     .then(response => {
-      console.log('Login response:', response.data);
       if(response.data.verified === false) {
         toast.error('User not verified!'); // Display error
         return router.push('/');

@@ -1,12 +1,16 @@
 import { connectToDatabase } from '@/utils/mongodb'; // Adjust the import based on your project structure
 import Candidate from '@/models/Candidate'; // Adjust the import based on your project structure
+import {validateSession} from '@/app/actions';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-
-      await connectToDatabase(); // Ensure you have a function to connect to your database
-      console.log("Get Candidates request received");
+      const session=await validateSession(req.headers.cookie?.split('; ').find(cookie => cookie.startsWith('session='))?.split('=')[1])
+      if(!session)
+      {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      await connectToDatabase(); 
 
       const candidates = await Candidate.find({}, { votes: 0 });
             // console.log(candidates);

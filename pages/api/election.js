@@ -1,9 +1,15 @@
 import {connectToDatabase} from '@/utils/mongodb';
 import Election from '@/models/Election';
+import {validateSession} from '@/app/actions';
 
 const handler = async (req, res) => {
     if (req.method === 'GET') {
       try {
+        const session=await validateSession(req.headers.cookie?.split('; ').find(cookie => cookie.startsWith('session='))?.split('=')[1])
+        if(!session)
+        {
+          return res.status(401).json({ error: 'Unauthorized' });
+        }
         await connectToDatabase();
         const election= await Election.find({});
         if (election.length === 0) {
