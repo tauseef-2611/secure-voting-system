@@ -10,50 +10,47 @@ import { useUser } from '../UserContext';
 export default function VotePage() {
     const [electionData, setElectionData] = useState<Election | null>(null);
     const router = useRouter();
-    const {user}= useUser();
+    const { user } = useUser();
+
     useEffect(() => {
         if (!user) return;
 
-        const checkPresent = async () => {
-            console.log(`Requesting: /api/voter-present/${user?.voter_id}`);
-
-            axios.get(`/api/voter-present/${user?.voter_id}`)
-                .then((res) => {
-                    if (res.data.present) {
-                        toast.success("Your attendance is marked");
-                    } else {
-                        toast.error("You attedance is not marked");
-                        router.push('/user');
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
+        const fetchData = async () => {
+            try {
+                // Check if the user is present
+                const presentRes = await axios.get(`/api/voter-present/${user.voter_id}`);
+                if (!presentRes.data.present) {
                     toast.error("Your attendance is not marked");
                     router.push('/user');
-                });
-        };
+                    return;
+                }
+                toast.success("Your attendance is marked");
 
-        const checkType = () => {
-            axios.get('/api/election')
-                .then((res) => {
-                    console.log(res.data[0]);
-                    if (res.data[0].type !== 'Electoral College') {
-                        alert("You are not allowed to access this page");
-                        router.push('/');
-                    } else {
-                        setElectionData(res.data[0]);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    alert("Something went wrong");
+                // Check the election type
+                const electionRes = await axios.get('/api/election');
+                const election = electionRes.data[0];
+
+                if (election.type !== 'Electoral College') {
+                    alert("You are not allowed to access this page");
                     router.push('/');
-                });
+                    return;
+                }
+                else if (election.status === 'ongoing')
+                {
+                    setElectionData(election);
+                }
+                else {
+                    toast.error("The election is not yet started or has ended");
+                    router.push('/user');
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                toast.error("Something went wrong");
+                router.push('/');
+            }
         };
 
-        checkPresent();
-        checkType();
-        console.log(electionData)
+        fetchData();
     }, [user, router]);
 
     return (
