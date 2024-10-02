@@ -149,7 +149,8 @@ const columns: ColumnDef<Candidate>[] = [
                   area: user?.area
                 }
               });
-              setData(response.data);
+              const filteredData = response.data.filter((candidate: Candidate) => candidate.candidate_id !== user?.voter_id);
+              setData(filteredData);
               setLoading(false);
             } catch (error: unknown) {
               if (error instanceof Error) {

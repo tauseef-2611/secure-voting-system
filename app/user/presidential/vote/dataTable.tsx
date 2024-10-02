@@ -145,7 +145,8 @@ const columns: ColumnDef<Candidate>[] = [
         const fetchData = async () => {
             try {
               const response = await axios.get('/api/getCandidates');
-              setData(response.data);
+              const filteredData = response.data.filter((candidate: Candidate) => candidate.candidate_id !== user?.voter_id);
+              setData(filteredData);
               setLoading(false);
             } catch (error: unknown) {
               if (error instanceof Error) {

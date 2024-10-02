@@ -74,7 +74,7 @@ export function CardWithForm() {
   }
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] align-top">
       <CardHeader>
         <CardTitle>Intekhaab</CardTitle>
         <CardDescription>Simple & Secure Elections</CardDescription>

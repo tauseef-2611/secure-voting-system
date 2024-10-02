@@ -76,8 +76,7 @@ export default function Register() {
       <Card className="w-[400px] shadow-lg">
         <CardHeader>
           <CardTitle>Register</CardTitle>
-          <CardDescription>Enter your details and get verified after registration</CardDescription>
-        </CardHeader>
+          <CardDescription>Enter your details to register.<br/> Get verified by an admin to log in.</CardDescription>        </CardHeader>
         <CardContent>
           <form onSubmit={(e) => e.preventDefault()}>
             <div className="grid w-full items-center gap-4">
