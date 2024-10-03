@@ -69,7 +69,7 @@ export default function VotePage() {
 
     return (
         <div className="">
-            <div className="flex items-center py-4">
+            <div className="flex items-center justify-center py-4">
                 <Card className="w-full max-w-md h-auto p-4">                    
                     <CardHeader>
                         <CardTitle>Welcome</CardTitle>

@@ -51,7 +51,7 @@ export function DatePickerDemo({ onDateChange }: DatePickerDemoProps) {
     <Popover>
       <Button
         variant={"outline"}
-        className={cn("w-[240px] justify-between text-left font-normal", !date && "text-muted-foreground")}
+        className={cn("w-[240px] justify-start text-left font-normal", !date && "text-muted-foreground")}
       >
         <input
           type="text"

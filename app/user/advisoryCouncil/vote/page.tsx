@@ -7,21 +7,15 @@ import { Election } from '@/utils/Types/election';
 import { User } from '@/utils/Types/user';
 import { getSession } from '@/app/actions';
 import { set } from 'mongoose';
+import { useUser } from '../../UserContext';
 
 export default function VotePage() {
     const router = useRouter();
     const [election, setElection] = useState<Election | null>(null);
-    const [user, setUser] = useState<User | null>(null);
+    const {user}=useUser();
 
     useEffect(() => {
-        async function fetchSession() {
-            const sessionData = await getSession();
-            if (sessionData === null) {
-                router.push('/');
-            } else {
-                setUser(sessionData.user as User);
-            }
-        }
+
         document.title = "Vote | Intekhaab";
         const checkType = () => {
             axios.get('/api/election')
@@ -50,7 +44,6 @@ export default function VotePage() {
                     router.push('/');
                 });
         };
-        fetchSession();
         checkType();
     }, [router]);
 

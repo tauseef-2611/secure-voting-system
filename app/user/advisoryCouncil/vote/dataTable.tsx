@@ -136,9 +136,6 @@ const columns: ColumnDef<Candidate>[] = [
   },
 ]
 
-
-
-
     const [data, setData] = React.useState<Candidate[]>([])
     React.useEffect(() => {
       console.log('Election:', election);
@@ -147,7 +144,6 @@ const columns: ColumnDef<Candidate>[] = [
               const response = await axios.get('/api/getCandidates');
               const filteredData = response.data.filter((candidate: Candidate) => candidate.candidate_id !== user?.voter_id);
               setData(filteredData);
-
               setLoading(false);
             } catch (error: unknown) {
               if (error instanceof Error) {
