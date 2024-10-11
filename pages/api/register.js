@@ -9,13 +9,20 @@ export default async function handler(req, res) {
             // Ensure you have a function to connect to your database
             await connectToDatabase();
 
-            const latestVoter = await Voter.findOne().sort({ voter_id: -1 }).exec();
+            const voters = await Voter.find({}, { voter_id: 1 }).exec();
+            const voterIds = voters.map(voter => parseInt(voter.voter_id, 10));
+            const largestVoterId = Math.max(...voterIds);
+
+            console.log(largestVoterId)
+
             let newVoterId;
         
-            if (latestVoter) {
+            if (largestVoterId!=0) {
               // Convert voter_id to a number, increment it, and convert back to a string
-              const latestVoterIdNumber = parseInt(latestVoter.voter_id, 10);
-              newVoterId = (latestVoterIdNumber + 1).toString();
+              // const latestVoterIdNumber = parseInt(latestVoter.voter_id, 10);
+              newVoterId = (largestVoterId + 1).toString();
+
+              console.log("Assigning new id:", newVoterId )
             } else {
               newVoterId = '1'; // Start from '1' if no voters exist
             }

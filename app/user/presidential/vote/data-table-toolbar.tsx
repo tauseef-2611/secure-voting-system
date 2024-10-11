@@ -28,14 +28,14 @@ export function DataTableToolbar<TData>({
         try {
             const response = await fetch("/api/voter-areas");
             const data = await response.json();
-            console.log("Fetched data:", data); // Log the fetched data to verify its structure
+            // console.log("Fetched data:", data); // Log the fetched data to verify its structure
             const mappedAreas = data.map((area: string) => ({
                 label: area,
                 value: area,
             }));
             setAreaOptions(mappedAreas);
-            console.log("Areas fetched and mapped successfully");
-            console.log(mappedAreas);
+            // console.log("Areas fetched and mapped successfully");
+            // console.log(mappedAreas);
         } catch (error) {
             console.error("Error fetching areas:", error);
         }

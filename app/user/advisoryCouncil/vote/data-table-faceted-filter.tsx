@@ -112,7 +112,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                           column?.setFilterValue(
                             filterValues.length ? filterValues : undefined
                           );
-                          console.log(column?.getFilterValue());
+                          // console.log(column?.getFilterValue());
                         }}
                       >
                         <div
@@ -171,9 +171,9 @@ export function DataTableFacetedFilterBool<TData, TValue>({
 
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as boolean[]);
-  console.log(selectedValues);
-  console.log(`Facets: ${JSON.stringify(facets)}`);
-  console.log(`Options: ${options.map(option => option.label).join(', ')}`);
+  // console.log(selectedValues);
+  // console.log(`Facets: ${JSON.stringify(facets)}`);
+  // console.log(`Options: ${options.map(option => option.label).join(', ')}`);
 
   return (
     <Popover>

@@ -61,7 +61,7 @@ export function DatePickerDemo({ onDateChange }: DatePickerDemoProps) {
           className="border-none outline-none bg-transparent flex-grow"
         />
         <PopoverTrigger asChild>
-          <div className="p-2">
+          <div className="py-2">
             <CalendarIcon className="h-4 w-4" />
           </div>
         </PopoverTrigger>

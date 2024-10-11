@@ -56,7 +56,7 @@ export default function Register() {
         unit: capitalizeFirstLetterOfEachWord(formData.unit),
       })
       .then(response => {
-        console.log('Register response:', response.data);
+        // console.log('Register response:', response.data);
         toast.success('Registered successfully!');})
       .then(() => {
 

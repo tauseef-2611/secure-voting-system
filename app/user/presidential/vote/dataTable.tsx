@@ -141,7 +141,7 @@ const columns: ColumnDef<Candidate>[] = [
 
     const [data, setData] = React.useState<Candidate[]>([])
     React.useEffect(() => {
-      console.log('Election:', election);
+      // console.log('Election:', election);
         const fetchData = async () => {
             try {
               const response = await axios.get('/api/getCandidates');
@@ -211,7 +211,7 @@ const columns: ColumnDef<Candidate>[] = [
     setVoteids(_ids);
   }, [table.getSelectedRowModel().rows]);
   const handleVote = async () => {
-    console.log('Voting for:', voteids);
+    // console.log('Voting for:', voteids);
     if(voteids.length < MAX_SELECTIONS) {
       toast.error(`Please select ${MAX_SELECTIONS} candidates`);
       return;
@@ -328,7 +328,7 @@ const columns: ColumnDef<Candidate>[] = [
   </AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
-      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogTitle>Please Confirm</AlertDialogTitle>
       <AlertDialogDescription>
         {table.getSelectedRowModel().rows.map((row) => (
           <p key={row.id}>

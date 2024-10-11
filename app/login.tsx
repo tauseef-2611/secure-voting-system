@@ -44,37 +44,38 @@ export function CardWithForm() {
     e.preventDefault();
     setLoading(true);
 
-    axios.post('/api/voter', {
-      phone: username,
-      dob: formatDate(password)
-    })
-    .then(response => {
-      if(response.data.verified === false) {
-        toast.error('User not verified!'); // Display error
-        return router.push('/');
-      }
-      else
-      {
+axios.post('/api/voter', {
+    phone: username,
+    dob: formatDate(password)
+  })
+  .then(response => {
+    if (response.data.verified === false) {
+      toast.error('User not verified!'); // Display error
+      router.push('/');
+      return Promise.reject('User not verified'); // Stop further execution
+    } else {
       return doLogin(response.data);
-      }
-    })
-    .then(() => {
-      // toast.success('Logged in successfully!'); // Display success toast
-      console.log('Login successful');
-      router.push('/user');
-    })
-    .catch(error => {
-      console.error('Login failed:', error);
-      console.log(error.response.data.message);
+    }
+  })
+  .then(() => {
+    console.log('Login successful');
+    router.push('/user');
+  })
+  .catch(error => {
+    console.error('Login failed:', error);
+    if (error.response && error.response.data && error.response.data.message) {
       toast.error(error.response.data.message); // Display error toast
-    })
-    .finally(() => {
-      setLoading(false);
-    });
-  }
+    } else {
+      toast.error(error); // Display generic error toast
+    }
+  })
+  .finally(() => {
+    setLoading(false);
+  });
+}
 
   return (
-    <Card className="w-[350px] align-top">
+    <Card className="w-[350px]">
       <CardHeader>
         <CardTitle>Intekhaab</CardTitle>
         <CardDescription>Simple & Secure Elections</CardDescription>

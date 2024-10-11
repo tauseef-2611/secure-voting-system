@@ -44,8 +44,8 @@ export default function VotePage() {
         };
         checkType();
 
-        console.log("Passing user", user);
-        console.log("Passing election", election);
+        // console.log("Passing user", user);
+        // console.log("Passing election", election);
     }, [router]);
 
     return (

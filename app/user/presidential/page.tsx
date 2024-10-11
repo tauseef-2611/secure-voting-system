@@ -15,7 +15,7 @@ export default function VotePage() {
         const checkType = () => {
             axios.get('/api/election')
                 .then((res) => {
-                    console.log(res.data[0]);
+                    // console.log(res.data[0]);
                     if (res.data[0].type !== "Presidential") {
                         router.push('/');
                     } else {

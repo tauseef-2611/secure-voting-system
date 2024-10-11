@@ -25,30 +25,29 @@ export default function VotePage() {
                     return;
                 }
                 toast.success("Your attendance is marked");
-
-                // Check the election type
-                const electionRes = await axios.get('/api/election');
-                const election = electionRes.data[0];
-
-                if (election.type !== 'Electoral College') {
-                    alert("You are not allowed to access this page");
-                    router.push('/');
-                    return;
-                }
-                else if (election.status === 'ongoing')
-                {
-                    setElectionData(election);
-                }
-                else {
-                    toast.error("The election is not yet started or has ended");
-                    router.push('/user');
-                }
             } catch (error) {
                 console.error("Error fetching data:", error);
                 toast.error("Something went wrong");
                 router.push('/');
             }
         };
+
+        const checkType = () => {
+            axios.get('/api/election')
+                .then((res) => {
+                    if (res.data[0].type !== 'Electoral College') {
+                        router.push('/');
+                    } else {
+                        setElectionData(res.data[0]);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("Something went wrong");
+                    router.push('/');
+                });
+        };
+        checkType();
 
         fetchData();
     }, [user, router]);
