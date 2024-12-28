@@ -12,9 +12,7 @@ export default async function handler(req, res) {
             const voters = await Voter.find({}, { voter_id: 1 }).exec();
             const voterIds = voters.map(voter => parseInt(voter.voter_id, 10));
             const largestVoterId = Math.max(...voterIds);
-
             console.log(largestVoterId)
-
             let newVoterId;
         
             if (largestVoterId!=0) {

@@ -104,9 +104,7 @@ axios.post('/api/voter', {
         <Button onClick={handleLogin} disabled={loading}>
           {loading ? 'Loading...' : 'Login'}
         </Button>
-        <Button variant="ghost"className="underline text-xs text-gray-400" onClick={() => router.push('/register')}>
-          Register
-        </Button>
+       
       </CardFooter>
     </Card>
   );

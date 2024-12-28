@@ -326,16 +326,29 @@ const columns: ColumnDef<Candidate>[] = [
     <AlertDialogHeader>
       <AlertDialogTitle>Please Confirm</AlertDialogTitle>
       <AlertDialogDescription>
+  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <thead>
+        <tr>
+          <th style={{ border: '1px solid #ddd', padding: '8px' }}>ID</th>
+          <th style={{ border: '1px solid #ddd', padding: '8px' }}>Area</th>
+          <th style={{ border: '1px solid #ddd', padding: '8px' }}>Name</th>
+        </tr>
+      </thead>
+      <tbody>
         {table.getSelectedRowModel().rows.map((row) => (
-          <p key={row.id}>
-  {`ID: ${row.original.candidate_id}, Area: ${row.original.area}, Name: ${
-    typeof row.original.name === 'object' 
-      ? JSON.stringify(row.original.name) 
-      : row.original.name
-  }`}
-</p>
+          <tr key={row.id}>
+            <td style={{ border: '1px solid #ddd', padding: '8px' }}>{row.original.candidate_id}</td>
+            <td style={{ border: '1px solid #ddd', padding: '8px' }}>{row.original.area}</td>
+            <td style={{ border: '1px solid #ddd', padding: '8px' }}>
+              {typeof row.original.name === 'object' ? JSON.stringify(row.original.name) : row.original.name}
+            </td>
+          </tr>
         ))}
-      </AlertDialogDescription>
+      </tbody>
+    </table>
+  </div>
+</AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
 
