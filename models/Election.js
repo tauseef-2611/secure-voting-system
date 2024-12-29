@@ -23,7 +23,8 @@ const ElectionSchema = new mongoose.Schema({
     perAreaNominees: { 
         type: Map, 
         of: Number, 
-    }
+    },
+    takeAttendance: { type: Boolean, required: true },
 });
 
 export default mongoose.models.Election || mongoose.model('Election', ElectionSchema);
